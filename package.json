@@ -2,7 +2,7 @@
   "name": "mikrotik-captive-autologin",
   "version": "1.0.0",
   "description": "Automatically logs into Mikrotik captive portal.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "node main.js"
   },
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/fathonix/MikrotikCaptiveAutologin/issues"
   },
-  "homepage": "https://github.com/fathonix/MikrotikCaptiveAutologin#readme"
+  "homepage": "https://github.com/fathonix/MikrotikCaptiveAutologin#readme",
+  "dependencies": {
+    "wifi-name": "^3.1.1"
+  }
 }

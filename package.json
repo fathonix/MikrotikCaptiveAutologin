@@ -1,0 +1,26 @@
+{
+  "name": "mikrotik-captive-autologin",
+  "version": "1.0.0",
+  "description": "Automatically logs into Mikrotik captive portal.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fathonix/MikrotikCaptiveAutologin.git"
+  },
+  "keywords": [
+    "bypass",
+    "captive",
+    "portal",
+    "captive-portal",
+    "mikrotik"
+  ],
+  "author": "fathonix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fathonix/MikrotikCaptiveAutologin/issues"
+  },
+  "homepage": "https://github.com/fathonix/MikrotikCaptiveAutologin#readme"
+}

@@ -22,13 +22,11 @@ Create `config.json` inside the script folder, like this:
 
 You can add multiple configurations for different SSIDs.
 
-`cd` to the folder and install the dependencies.
-
-    npm install
-
-Then run this script.
+`cd` to the folder and run this script.
 
     npm run start
+
+No need to `npm install` since there is no dependency needed.
 
 ## Contributors
 
@@ -37,6 +35,8 @@ since my JavaScript and Node.js knowledge is a bit rusty (pun intended).
 
 ## License
 
-This script is licensed under the MIT License, except the MD5 encoder (`md5.js`).
+This script is licensed under the MIT License, © 2022 Aldo Adirajasa Fathoni.
 
-The MD5 encoder is licensed under the BSD License, © 1998-2009 Paul Johnston & Contributors.
+`md5.js` is licensed under the BSD License, © 1999-2002 Paul Johnston.
+
+`wifi-name` is licensed under the MIT License, © 2015-2017 Kevin Mårtensson.

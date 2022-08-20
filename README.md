@@ -7,12 +7,21 @@ This Node.js script automatically logs into [Mikrotik](https://mikrotik.com) cap
 Create `config.json` inside the script folder, like this:
 
 ```json
-{
-    "hostname": "<captive portal hostname without http://>",
-    "username": "<your username>",
-    "password": "<your password>"
-}
+[
+    {
+        "ssid": "<wifi name>",
+        "hostname": "<captive portal hostname without http://>",
+        "username": "<your username>",
+        "password": "<your password>"
+    }
+]
 ```
+
+You can add multiple configurations for different SSIDs.
+
+Install the dependencies.
+
+    npm install
 
 Then run this script.
 

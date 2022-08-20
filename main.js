@@ -1,8 +1,7 @@
-const fs = require("fs");
 const http = require("http");
 const process = require("process");
-const md5 = require("./md5");
-const wifiName = require("wifi-name");
+const md5 = require("./lib/md5");
+const wifiName = require("./lib/wifi-name/wifi-name");
 
 function getHashCode(response, password) {
   let hash = Array.from(
@@ -55,7 +54,8 @@ function login(config, response) {
     });
   });
   request.on("error", (err) => {
-    throw err;
+    console.warn(`Error: ${err.message}`);
+    process.exit(1);
   });
   request.write(postData);
   request.end();
@@ -79,7 +79,8 @@ function initLogin(config) {
     });
   });
   request.on("error", (err) => {
-    throw err;
+    console.warn(`Error: ${err.message}`);
+    process.exit(1);
   });
   request.end();
 }
@@ -87,12 +88,10 @@ function initLogin(config) {
 function main() {
   let configs;
   try {
-    configs = JSON.parse(
-      fs.readFileSync("./config.json", { encoding: "utf8", flag: "r" })
-    );
+    configs = require("./config.json");
   } catch (err) {
     console.warn(`Error: ${err.message}`);
-    configs = [{}];
+    process.exit(1);
   }
 
   for (idx in configs) {

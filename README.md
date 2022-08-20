@@ -2,7 +2,7 @@
 
 This Node.js script automatically logs into [Mikrotik](https://mikrotik.com) captive portal.
 
-## Configure
+## Configuration
 
 Create `config.json` inside the script folder, like this:
 
@@ -19,7 +19,7 @@ Create `config.json` inside the script folder, like this:
 
 You can add multiple configurations for different SSIDs.
 
-Install the dependencies.
+`cd` to the folder and install the dependencies.
 
     npm install
 

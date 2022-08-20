@@ -62,6 +62,7 @@ function login(config, response) {
 }
 
 function initLogin(config) {
+  console.log(`SSID: ${config.ssid}`);
   console.log(
     `Logging into ${config.hostname} with username ${config.username}...`
   );

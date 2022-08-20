@@ -2,6 +2,7 @@ const fs = require("fs");
 const http = require("http");
 const process = require("process");
 const md5 = require("./md5");
+const wifiName = require("wifi-name");
 
 function getHashCode(response, password) {
   let hash = Array.from(
@@ -11,8 +12,8 @@ function getHashCode(response, password) {
   )[0];
 
   if (hash === undefined) {
-    console.log(
-      "ERROR: Can't find hash in response. Are you already logged in or trying to log into another website?"
+    console.warn(
+      "Error: Can't find hash in response. Are you already logged in or trying to log into another website?"
     );
     process.exit(1);
   }
@@ -24,8 +25,8 @@ function displayResponse(response) {
   if (response.match(/You are logged in/)) {
     console.log("Succesfully logged in!");
   } else {
-    console.log("Error logging in! See below for the response.");
-    console.log(response);
+    console.warn("Error logging in! See below for the response.");
+    console.warn(response);
   }
 }
 
@@ -44,7 +45,7 @@ function login(config, response) {
   };
   const request = http.request(options, (res) => {
     if (res.statusCode !== 200) {
-      console.log(
+      console.warn(
         `Error: POST to ${config.hostname} returns status code ${res.statusCode}`
       );
       process.exit(1);
@@ -61,17 +62,13 @@ function login(config, response) {
 }
 
 function initLogin(config) {
-  config.hostname = config.hostname || "192.168.0.1";
-  config.username = config.username || "admin";
-  config.password = config.password || "admin";
-
   console.log(
     `Logging into ${config.hostname} with username ${config.username}...`
   );
 
   const request = http.get(`http://${config.hostname}/login`, (res) => {
     if (res.statusCode !== 200) {
-      console.log(
+      console.warn(
         `Error: GET to ${config.hostname} returns status code ${res.statusCode}`
       );
       process.exit(1);
@@ -87,16 +84,27 @@ function initLogin(config) {
 }
 
 function main() {
-  let config;
+  let configs;
   try {
-    config = JSON.parse(
+    configs = JSON.parse(
       fs.readFileSync("./config.json", { encoding: "utf8", flag: "r" })
     );
   } catch (err) {
-    console.log(err.message);
-    config = {};
+    console.warn(`Error: ${err.message}`);
+    configs = [{}];
   }
-  initLogin(config);
+
+  for (idx in configs) {
+    let config = configs[idx];
+    if (!config.ssid || !config.hostname || !config.username || !config.password) {
+      console.warn("Error: Configuration is not valid or one of the arguments is not supplied.");
+      process.exit(1);
+    }
+    if (config.ssid === wifiName.sync()) {
+      initLogin(config);
+      break;
+    }
+  }
 }
 
 main();

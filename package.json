@@ -1,7 +1,7 @@
 {
   "name": "mikrotik-captive-autologin",
   "version": "1.0.0",
-  "description": "Automatically logs into Mikrotik captive portal.",
+  "description": "Automates logging into Mikrotik captive portal.",
   "main": "main.js",
   "scripts": {
     "start": "node main.js"

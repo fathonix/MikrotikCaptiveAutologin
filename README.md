@@ -1,6 +1,9 @@
 # Mikrotik Captive Autologin
 
-This Node.js script automatically logs into [Mikrotik](https://mikrotik.com) captive portal.
+This Node.js script automates logging into [Mikrotik](https://mikrotik.com) captive portal.
+
+To add more security, Mikrotik captive portal appends some random bytes and encodes the transmitted password to MD5.
+This script retrieves the bytes, appends and encodes the password, then sends it to the captive portal.
 
 ## Configuration
 

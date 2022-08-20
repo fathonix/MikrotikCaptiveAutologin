@@ -18,6 +18,11 @@ Then run this script.
 
     npm run start
 
+## Contributors
+
+Thank you so much to [Iyxan23](https://github.com/Iyxan23) for the idea and helping me out in a lot of things,
+since my JavaScript and Node.js knowledge is a bit rusty (pun intended).
+
 ## License
 
 This script is licensed under the MIT License, except the MD5 encoder (`md5.js`).

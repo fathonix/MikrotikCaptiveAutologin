@@ -1,7 +1,7 @@
 const http = require("http");
 const process = require("process");
 const md5 = require("./lib/md5");
-const wifiName = require("./lib/wifi-name/wifi-name");
+const wifiName = require("./lib/wifi-name");
 
 function getHashCode(response, password) {
   let hash = Array.from(

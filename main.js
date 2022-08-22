@@ -2,6 +2,7 @@ const http = require("http");
 const md5 = require("./lib/md5");
 const wifiName = require("./lib/wifi-name");
 const utils = require("./lib/utils");
+const os = require("os");
 
 function getHashCode(response, password) {
   let hash = Array.from(
@@ -82,7 +83,7 @@ function initLogin(config) {
 function main() {
   let configs;
   try {
-    configs = require("./config.json");
+    configs = require(`${os.homedir()}/.config/mikrotik-captive-autologin/config.json`);
   } catch (err) {
     utils.die(err.message);
   }

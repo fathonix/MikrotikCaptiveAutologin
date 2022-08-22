@@ -87,6 +87,10 @@ function main() {
     utils.die(err.message);
   }
 
+  if (configs.length < 1) {
+    utils.die("No configuration found so Wi-Fi was not logged in.");
+  }
+
   for (idx in configs) {
     let config = configs[idx];
     if (!config.ssid || !config.hostname || !config.username || !config.password) {

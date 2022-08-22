@@ -103,4 +103,4 @@ function main() {
   }
 }
 
-module.exports = main;
+module.exports = { main };

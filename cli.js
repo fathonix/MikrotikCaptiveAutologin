@@ -1,3 +1,1 @@
-const main = require("./main");
-
-main();
+require("./main").main();

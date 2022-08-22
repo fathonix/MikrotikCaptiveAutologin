@@ -12,7 +12,7 @@ function getHashCode(response, password) {
 
   if (hash === undefined) {
     utils.die(
-      "Can't find hash in response. Are you already logged in or trying to log into another website?"
+      "Could not find hash in response. Are you already logged in or trying to log into another website?"
     );
   }
 
@@ -23,7 +23,7 @@ function displayResponse(response) {
   if (response.match(/You are logged in/)) {
     console.log("Successfully logged in!");
   } else {
-    utils.die(`Can't log in! See below for the response.\n${response}`);
+    utils.die(`Could not log in! See below for the response.\n${response}`);
   }
 }
 
@@ -43,7 +43,7 @@ function login(config, response) {
   const request = http.request(options, (res) => {
     if (res.statusCode !== 200) {
       utils.die(
-        `POST to ${config.hostname} returns status code ${res.statusCode}`
+        `POST to ${config.hostname} returned status code ${res.statusCode}.`
       );
     }
     res.on("data", (data) => {
@@ -66,7 +66,7 @@ function initLogin(config) {
   const request = http.get(`http://${config.hostname}/login`, (res) => {
     if (res.statusCode !== 200) {
       utils.die(
-        `GET to ${config.hostname} returns status code ${res.statusCode}`
+        `GET to ${config.hostname} returned status code ${res.statusCode}.`
       );
     }
     res.on("data", (data) => {

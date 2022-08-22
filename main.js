@@ -1,7 +1,7 @@
 const http = require("http");
-const process = require("process");
 const md5 = require("./lib/md5");
 const wifiName = require("./lib/wifi-name");
+const utils = require("./lib/utils");
 
 function getHashCode(response, password) {
   let hash = Array.from(
@@ -11,10 +11,9 @@ function getHashCode(response, password) {
   )[0];
 
   if (hash === undefined) {
-    console.warn(
-      "Error: Can't find hash in response. Are you already logged in or trying to log into another website?"
+    utils.die(
+      "Can't find hash in response. Are you already logged in or trying to log into another website?"
     );
-    process.exit(1);
   }
 
   return md5.hexMD5(eval(`"${hash[1]}"`) + password + eval(`"${hash[2]}"`));
@@ -22,10 +21,9 @@ function getHashCode(response, password) {
 
 function displayResponse(response) {
   if (response.match(/You are logged in/)) {
-    console.log("Succesfully logged in!");
+    console.log("Successfully logged in!");
   } else {
-    console.warn("Error logging in! See below for the response.");
-    console.warn(response);
+    utils.die(`Can't log in! See below for the response.\n${response}`);
   }
 }
 
@@ -44,18 +42,16 @@ function login(config, response) {
   };
   const request = http.request(options, (res) => {
     if (res.statusCode !== 200) {
-      console.warn(
-        `Error: POST to ${config.hostname} returns status code ${res.statusCode}`
+      utils.die(
+        `POST to ${config.hostname} returns status code ${res.statusCode}`
       );
-      process.exit(1);
     }
     res.on("data", (data) => {
       displayResponse(data.toString());
     });
   });
   request.on("error", (err) => {
-    console.warn(`Error: ${err.message}`);
-    process.exit(1);
+    utils.die(err.message);
   });
   request.write(postData);
   request.end();
@@ -69,18 +65,16 @@ function initLogin(config) {
 
   const request = http.get(`http://${config.hostname}/login`, (res) => {
     if (res.statusCode !== 200) {
-      console.warn(
-        `Error: GET to ${config.hostname} returns status code ${res.statusCode}`
+      utils.die(
+        `GET to ${config.hostname} returns status code ${res.statusCode}`
       );
-      process.exit(1);
     }
     res.on("data", (data) => {
       login(config, data.toString());
     });
   });
   request.on("error", (err) => {
-    console.warn(`Error: ${err.message}`);
-    process.exit(1);
+    utils.die(err.message);
   });
   request.end();
 }
@@ -90,15 +84,13 @@ function main() {
   try {
     configs = require("./config.json");
   } catch (err) {
-    console.warn(`Error: ${err.message}`);
-    process.exit(1);
+    utils.die(err.message);
   }
 
   for (idx in configs) {
     let config = configs[idx];
     if (!config.ssid || !config.hostname || !config.username || !config.password) {
-      console.warn("Error: Configuration is not valid or one of the arguments is not supplied.");
-      process.exit(1);
+      utils.die("Configuration is not valid or one of the arguments is not supplied.");
     }
     if (config.ssid === wifiName.sync()) {
       initLogin(config);

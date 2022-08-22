@@ -1,5 +1,5 @@
 {
-  "name": "mikrotik-captive-autologin",
+  "name": "@fathonix/mikrotik-captive-autologin",
   "version": "1.1.0",
   "description": "Automates logging into Mikrotik captive portal.",
   "main": "main.js",

@@ -7,7 +7,12 @@ This script retrieves the bytes, appends and encodes the password, then sends it
 
 ## Configuration
 
-Create `config.json` inside the script folder, like this:
+Install this package with NPM:
+
+    npm install -g mikrotik-captive-autologin
+
+Create `$HOME/.config/mikrotik-captive-autologin` directory and create `config.json` file inside it,
+and fill it like this:
 
 ```json
 [
@@ -22,11 +27,9 @@ Create `config.json` inside the script folder, like this:
 
 You can add multiple configurations for different SSIDs.
 
-`cd` to the folder and run this script.
+Then run the script.
 
-    npm run start
-
-No need to `npm install` since there is no dependency needed.
+    mikrotik-captive-autologin
 
 ## Contributors
 

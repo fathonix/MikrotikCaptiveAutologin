@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Automates logging into Mikrotik captive portal.",
   "main": "main.js",
+  "bin": "cli.js",
   "scripts": {
     "start": "node main.js"
   },

@@ -5,13 +5,9 @@ const utils = require("./lib/utils");
 const os = require("os");
 
 function getHashCode(response, password) {
-  let hash = Array.from(
-    response.matchAll(
-      /document\.sendin\.password\.value = hexMD5\('(.{4})' \+ document\.login\.password\.value \+ '(.{64})'\);/g
-    )
-  )[0];
+  let hash = /document\.sendin\.password\.value = hexMD5\('(.{4})' \+ document\.login\.password\.value \+ '(.{64})'\);/g.exec(response);
 
-  if (hash === undefined) {
+  if (!hash && !hash.length) {
     utils.die(
       "Could not find hash in response. Are you already logged in or trying to log into another website?"
     );
@@ -21,7 +17,7 @@ function getHashCode(response, password) {
 }
 
 function displayResponse(response) {
-  if (response.match(/You are logged in/)) {
+  if (response.includes("You are logged in")) {
     console.log("Successfully logged in!");
   } else {
     utils.die(`Could not log in! See below for the response.\n${response}`);

@@ -31,6 +31,12 @@ Then run the script.
 
     mikrotik-captive-autologin
 
+## Android Users
+
+If you use this script on Android, you have to grant DUMP permission to the app that executes this script first.
+
+    adb shell pm grant <app package name> android.permission.DUMP
+
 ## Contributors
 
 Thank you so much to [Iyxan23](https://github.com/Iyxan23) for the idea and helping me out in a lot of things,

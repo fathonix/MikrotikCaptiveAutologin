@@ -131,3 +131,6 @@ dist
 
 # Config file
 config.json
+
+# OSX specific
+.DS_Store

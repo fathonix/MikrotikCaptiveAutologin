@@ -5,11 +5,14 @@ const utils = require("./lib/utils");
 const os = require("os");
 
 function getHashCode(response, password) {
-  let hash = /document\.sendin\.password\.value = hexMD5\('(.{4})' \+ document\.login\.password\.value \+ '(.{64})'\);/g.exec(response);
+  let hash =
+    /document\.sendin\.password\.value = hexMD5\('(.{4})' \+ document\.login\.password\.value \+ '(.{64})'\);/g.exec(
+      response,
+    );
 
   if (!hash && !hash.length) {
     utils.die(
-      "Could not find hash in response. Are you already logged in or trying to log into another website?"
+      "Could not find hash in response. Are you already logged in or trying to log into another website?",
     );
   }
 
@@ -40,11 +43,16 @@ function login(config, response) {
   const request = http.request(options, (res) => {
     if (res.statusCode !== 200) {
       utils.die(
-        `POST to ${config.hostname} returned status code ${res.statusCode}.`
+        `POST to ${config.hostname} returned status code ${res.statusCode}.`,
       );
     }
+
+    let result = "";
     res.on("data", (data) => {
-      displayResponse(data.toString());
+      result += data.toString();
+    });
+    res.on("end", () => {
+      displayResponse(result);
     });
   });
   request.on("error", (err) => {
@@ -57,17 +65,22 @@ function login(config, response) {
 function initLogin(config) {
   console.log(`SSID: ${config.ssid}`);
   console.log(
-    `Logging into ${config.hostname} with username ${config.username}...`
+    `Logging into ${config.hostname} with username ${config.username}...`,
   );
 
   const request = http.get(`http://${config.hostname}/login`, (res) => {
     if (res.statusCode !== 200) {
       utils.die(
-        `GET to ${config.hostname} returned status code ${res.statusCode}.`
+        `GET to ${config.hostname} returned status code ${res.statusCode}.`,
       );
     }
+
+    let result = "";
     res.on("data", (data) => {
-      login(config, data.toString());
+      result += data.toString();
+    });
+    res.on("end", () => {
+      login(config, result);
     });
   });
   request.on("error", (err) => {
@@ -79,7 +92,9 @@ function initLogin(config) {
 function main() {
   let configs;
   try {
-    configs = require(`${os.homedir()}/.config/mikrotik-captive-autologin/config.json`);
+    configs = require(
+      `${os.homedir()}/.config/mikrotik-captive-autologin/config.json`,
+    );
   } catch (err) {
     utils.die(err.message);
   }
@@ -90,8 +105,15 @@ function main() {
 
   for (idx in configs) {
     let config = configs[idx];
-    if (!config.ssid || !config.hostname || !config.username || !config.password) {
-      utils.die("Configuration is not valid or one of the arguments is not supplied.");
+    if (
+      !config.ssid ||
+      !config.hostname ||
+      !config.username ||
+      !config.password
+    ) {
+      utils.die(
+        "Configuration is not valid or one of the arguments is not supplied.",
+      );
     }
     if (config.ssid === wifiName.sync()) {
       initLogin(config);
